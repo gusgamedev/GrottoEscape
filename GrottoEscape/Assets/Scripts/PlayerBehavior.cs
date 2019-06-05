@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerBehavior : MonoBehaviour
 {
     private Rigidbody2D _rb;
     private PlayerCollision _collision;
-    private PlayerAnimation _animation;
+    private PlayerAnimation _animation;         
     private bool _canMove = true;
     private bool _isOnFloor = false;
+    private bool _facingRight = true;
 
     [Header("Stats")]
-    [SerializeField] private float _speed = 7f;
-    [SerializeField] private float _jumpForce = 12f;
+    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _jumpForce = 10f;
+
+     [Header("Action")]
+    [SerializeField] private Transform _firePoint;
+    [SerializeField] private GameObject _bullet;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +25,8 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>(); 
         _collision = GetComponent<PlayerCollision>();
         _animation = GetComponentInChildren<PlayerAnimation>();
-        
+
+               
 
     }
 
@@ -36,15 +42,17 @@ public class PlayerMovement : MonoBehaviour
 
         _animation.Jump(_collision.isOnFloor);
 
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && _isOnFloor)
         {   
-            //Shot();
+            _canMove = false;
             _animation.Shot(true);
-        } else if (Input.GetButtonUp("Fire1"))
+            Shoot();
+        } 
+        else if (Input.GetButtonUp("Fire1")) 
+        {
             _animation.Shot(false);
-
-
-
+            _canMove = true;
+        }
     }
 
     private void Walk(float direction) {
@@ -55,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
             _rb.velocity = new Vector2(0, _rb.velocity.y);
 
         Flip(direction);
+
         _animation.Walk(_rb.velocity.x);
     }
 
@@ -66,13 +75,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip(float direction)
     {
-        if ((direction > 0 && transform.localScale.x < 0) || (direction < 0 && transform.localScale.x > 0))
-            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);        
+        if ((direction > 0 && !_facingRight) || (direction < 0 && _facingRight)){
+            _facingRight = !_facingRight;        
+            transform.Rotate(0, 180, 0);        
+        }
     }
 
-    private void Shot()
+    private void Shoot()
     {        
-        
+        if (_bullet != null && _firePoint != null)
+            Instantiate(_bullet, _firePoint.position, _firePoint.rotation);
     }
 
    
