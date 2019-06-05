@@ -18,6 +18,8 @@ public class PlayerBehavior : MonoBehaviour
      [Header("Action")]
     [SerializeField] private Transform _firePoint;
     [SerializeField] private GameObject _bullet;
+    [SerializeField] private float _fireRate = 0.2f;
+    private bool _canShoot = true;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +44,7 @@ public class PlayerBehavior : MonoBehaviour
 
         _animation.Jump(_collision.isOnFloor);
 
-        if (Input.GetButton("Fire1") && _isOnFloor)
+        if (Input.GetButton("Fire1"))
         {   
             _canMove = false;
             _animation.Shot(true);
@@ -83,8 +85,15 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Shoot()
     {        
-        if (_bullet != null && _firePoint != null)
+        if (_bullet != null && _firePoint != null) {
+            _canShoot = false;
             Instantiate(_bullet, _firePoint.position, _firePoint.rotation);
+            Invoke("NextShot", _fireRate);
+        }
+    }
+
+    void NextShot() {
+        _canShoot = true;
     }
 
    
