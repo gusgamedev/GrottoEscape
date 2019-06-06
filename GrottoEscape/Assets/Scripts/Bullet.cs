@@ -19,16 +19,15 @@ public class Bullet : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D hitInfo)
 	{
-        //if (hitInfo.CompareTag("Enemy"))
-        //  {
-        /* Enemy enemy = hitInfo.GetComponent<Enemy>();
-         if (enemy != null)
-         {
-             enemy.TakeDamage(_damage);
-         }            
-          */
-
-        //   }
+        if (hitInfo.CompareTag("Enemy"))
+        {
+            Enemy enemy = hitInfo.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage();
+            }            
+        }
+        
         Instantiate(_fireParticle, transform.position, transform.rotation);
 
         Destroy(gameObject);
