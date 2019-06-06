@@ -10,11 +10,11 @@ public class PlayerCollision : MonoBehaviour
 
     [Space]
     [Header("Booleans")]
-    public bool isOnFloor;
-    public bool onWall;
-    public bool onRightWall;
-    public bool onLeftWall;
-    public int wallSide;
+    public bool isOnFloor = true;
+    //public bool onWall;
+    //public bool onRightWall;
+    //public bool onLeftWall;
+    //public int wallSide;
 
     [Space]
     [Header("Collision")]
@@ -33,14 +33,14 @@ public class PlayerCollision : MonoBehaviour
     {  
         isOnFloor = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, collisionRadius, groundLayer);
         
-        onWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer) 
-            || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+        //onWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer) 
+         //   || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
 
-        onRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
+        //onRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
         
-        onLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+        //onLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
 
-        wallSide = onRightWall ? -1 : 1;
+        //wallSide = onRightWall ? -1 : 1;
     }
 
     void OnDrawGizmos()

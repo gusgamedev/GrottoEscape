@@ -153,4 +153,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 20
   _damage: 1
-  _rb: {fileID: 0}
+  _fireParticle: {fileID: 3489957398146819050, guid: 7017ed48b699e9244838b77e07441dfb,
+    type: 3}

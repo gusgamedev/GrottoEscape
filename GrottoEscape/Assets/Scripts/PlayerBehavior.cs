@@ -7,9 +7,10 @@ public class PlayerBehavior : MonoBehaviour
     private Rigidbody2D _rb;
     private PlayerCollision _collision;
     private PlayerAnimation _animation;         
+    private ParticleSystem _particleJump;         
     private bool _canMove = true;
-    private bool _isOnFloor = false;
     private bool _facingRight = true;
+    private bool _isOnFloor;
 
     [Header("Stats")]
     [SerializeField] private float _speed = 5f;
@@ -27,9 +28,9 @@ public class PlayerBehavior : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>(); 
         _collision = GetComponent<PlayerCollision>();
         _animation = GetComponentInChildren<PlayerAnimation>();
+        _particleJump = GetComponentInChildren<ParticleSystem>();
 
-               
-
+        _isOnFloor = _collision.isOnFloor;
     }
 
     // Update is called once per frame
@@ -44,17 +45,32 @@ public class PlayerBehavior : MonoBehaviour
 
         _animation.Jump(_collision.isOnFloor);
 
-        if (Input.GetButton("Fire1"))
-        {   
-            _canMove = false;
-            _animation.Shot(true);
-            Shoot();
+        if (Input.GetButton("Fire1") )
+        {      
+                _animation.Shot(true);
+                _canMove = !_collision.isOnFloor;
+                Shoot();
+                
         } 
         else if (Input.GetButtonUp("Fire1")) 
         {
             _animation.Shot(false);
             _canMove = true;
+
         }
+
+        if (_collision.isOnFloor && !_isOnFloor)
+        {
+            GroundTouch();
+            _isOnFloor = true;
+        }
+
+        if (!_collision.isOnFloor && _isOnFloor)
+        {
+            _isOnFloor = false;
+        }
+
+
     }
 
     private void Walk(float direction) {
@@ -71,8 +87,11 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Jump(float jumpForce) {
 
-        if ( _collision.isOnFloor)
+        if (_collision.isOnFloor)
+        {
             _rb.velocity = Vector2.up * jumpForce;
+            _particleJump.Play();
+        }
     }
 
     private void Flip(float direction)
@@ -85,7 +104,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Shoot()
     {        
-        if (_bullet != null && _firePoint != null) {
+        if (_bullet != null && _firePoint != null && _canShoot) {
             _canShoot = false;
             Instantiate(_bullet, _firePoint.position, _firePoint.rotation);
             Invoke("NextShot", _fireRate);
@@ -94,6 +113,11 @@ public class PlayerBehavior : MonoBehaviour
 
     void NextShot() {
         _canShoot = true;
+    }
+
+    private void GroundTouch()
+    {
+        _particleJump.Play();
     }
 
    
