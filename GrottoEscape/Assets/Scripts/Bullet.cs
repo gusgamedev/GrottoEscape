@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
         
 		_rb = GetComponent<Rigidbody2D>();
         _rb.velocity = transform.right * _speed;
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 2f);
 	}
 
 	void OnTriggerEnter2D (Collider2D hitInfo)
@@ -28,8 +28,7 @@ public class Bullet : MonoBehaviour
             }            
         }
         
-        Instantiate(_fireParticle, transform.position, transform.rotation);
-
+        Instantiate(_fireParticle, transform.position, transform.rotation);        
         Destroy(gameObject);
 	}
 }

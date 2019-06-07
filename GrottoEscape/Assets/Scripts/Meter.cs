@@ -6,16 +6,16 @@ using UnityEngine.UI;
 public class Meter : MonoBehaviour
 {
     [SerializeField] private Sprite[] meters = new Sprite[7];
-    private Image _image;
+    [SerializeField] private Image _image;
 
     void Start()
     {
-        _image.GetComponent<Image>();
+        //_image.GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _image.sprite = meters[1];
+        _image.sprite = meters[GameManager.instance.PlayerHealth];
     }
 }
