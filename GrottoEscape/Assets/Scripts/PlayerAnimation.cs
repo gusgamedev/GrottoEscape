@@ -6,6 +6,10 @@ public class PlayerAnimation : MonoBehaviour
 {
 
     private Animator _anim;
+
+    [Header("Particles Animations")]
+    [SerializeField] private ParticleSystem _jumpParticles;
+    [SerializeField] private ParticleSystem _shotParticles;
     
     // Start is called before the first frame update
     void Start()
@@ -21,11 +25,21 @@ public class PlayerAnimation : MonoBehaviour
     public void Jump(bool isOnFloor)
     {
         _anim.SetBool("isOnFloor", isOnFloor);
+        _jumpParticles.Play();
     }
 
-    public void Shot(bool isShooting)
+    public void Land(bool isOnFloor)
+    {
+        _anim.SetBool("isOnFloor", isOnFloor);
+        _jumpParticles.Play();
+    }
+
+    public void Shot(bool isShooting, bool showParticles)
     {
         _anim.SetBool("shooting", isShooting);
+
+        if (showParticles)
+            _shotParticles.Play();
     }
 
 

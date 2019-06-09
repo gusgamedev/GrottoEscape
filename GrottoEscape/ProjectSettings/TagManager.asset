@@ -20,7 +20,7 @@ TagManager:
   - Player
   - Collectable
   - Confiner
-  - 
+  - Parallax
   - 
   - 
   - 
@@ -39,9 +39,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Background
+    uniqueID: 3756228807
+    locked: 0
+  - name: Trap
+    uniqueID: 2130453741
     locked: 0
   - name: Ground
     uniqueID: 2087532509
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Decoration
+    uniqueID: 2969923219
     locked: 0

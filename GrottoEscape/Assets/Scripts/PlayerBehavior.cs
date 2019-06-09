@@ -6,21 +6,24 @@ public class PlayerBehavior : MonoBehaviour
 {
     private Rigidbody2D _rb;
     private PlayerCollision _collision;
-    private PlayerAnimation _animation;         
-    private ParticleSystem _particleJump;         
+    private PlayerAnimation _animation;
+
     private bool _canMove = true;
     private bool _facingRight = true;
     private bool _isOnFloor;
+    private bool _canShoot = true;
 
-    [Header("Stats")]
+    [Header("Jump Variables")]
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _jumpForce = 10f;
+  //  [SerializeField] private ParticleSystem _particleJump;
 
-     [Header("Action")]
+    [Header("Shot Variables")]
     [SerializeField] private Transform _firePoint;
     [SerializeField] private GameObject _bullet;
     [SerializeField] private float _fireRate = 0.2f;
-    private bool _canShoot = true;
+   // [SerializeField] private ParticleSystem _shotParticle;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -28,35 +31,33 @@ public class PlayerBehavior : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>(); 
         _collision = GetComponent<PlayerCollision>();
         _animation = GetComponentInChildren<PlayerAnimation>();
-        _particleJump = GetComponentInChildren<ParticleSystem>();
+        
 
         _isOnFloor = _collision.isOnFloor;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-
         float direction = Input.GetAxisRaw("Horizontal");
         Walk(direction);
-            
+    }
+
+    void Update()
+    {
         if (Input.GetButtonDown("Jump"))
             Jump(_jumpForce);
 
-        _animation.Jump(_collision.isOnFloor);
-
         if (Input.GetButton("Fire1") )
         {      
-                _animation.Shot(true);
+                _animation.Shot(true, _canShoot);
                 _canMove = !_collision.isOnFloor;
                 Shoot();
                 
         } 
         else if (Input.GetButtonUp("Fire1")) 
         {
-            _animation.Shot(false);
+            _animation.Shot(false, false);
             _canMove = true;
-
         }
 
         if (_collision.isOnFloor && !_isOnFloor)
@@ -90,7 +91,7 @@ public class PlayerBehavior : MonoBehaviour
         if (_collision.isOnFloor)
         {
             _rb.velocity = Vector2.up * jumpForce;
-            _particleJump.Play();
+            _animation.Jump(false);
         }
     }
 
@@ -98,7 +99,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if ((direction > 0 && !_facingRight) || (direction < 0 && _facingRight)){
             _facingRight = !_facingRight;        
-            transform.Rotate(0, 180, 0);        
+            transform.Rotate(0,180,0);        
         }
     }
 
@@ -106,9 +107,9 @@ public class PlayerBehavior : MonoBehaviour
     {        
         if (_bullet != null && _firePoint != null && _canShoot) {
             _canShoot = false;
-            Instantiate(_bullet, _firePoint.position, _firePoint.rotation);
+            Instantiate(_bullet, _firePoint.position, _firePoint.rotation);                
             Invoke("NextShot", _fireRate);
-        }
+        }       
     }
 
     void NextShot() {
@@ -116,8 +117,8 @@ public class PlayerBehavior : MonoBehaviour
     }
 
     private void GroundTouch()
-    {
-        _particleJump.Play();
+    {   
+        _animation.Land(true);
     }
 
    
