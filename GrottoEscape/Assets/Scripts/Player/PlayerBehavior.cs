@@ -8,30 +8,23 @@ public class PlayerBehavior : MonoBehaviour
     private PlayerCollision _collision;
     private PlayerAnimation _animation;
 
+    private Shot _shot;
+
     private bool _canMove = true;
     private bool _facingRight = true;
     private bool _isOnFloor = true;
-    private bool _canShoot = true;
-
+ 
     [Header("Jump Variables")]
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _jumpForce = 10f;
-  //  [SerializeField] private ParticleSystem _particleJump;
-
-    [Header("Shot Variables")]
-    [SerializeField] private Transform _firePoint;
-    [SerializeField] private GameObject _bullet;
-    [SerializeField] private float _fireRate = 0.2f;
-   // [SerializeField] private ParticleSystem _shotParticle;
-    
-
+   
     // Start is called before the first frame update
-    void Start()
-    {
+    private void Awake() {
+        
         _rb = GetComponent<Rigidbody2D>(); 
         _collision = GetComponent<PlayerCollision>();
         _animation = GetComponentInChildren<PlayerAnimation>();
-        
+        _shot = GetComponent<Shot>();        
 
         _isOnFloor = _collision.isOnFloor;
     }
@@ -51,9 +44,9 @@ public class PlayerBehavior : MonoBehaviour
 
         if (Input.GetButton("Fire1") )
         {      
-            _animation.Shot(true, _canShoot);
+            _animation.Shot(true, _shot._canShoot);
             _canMove = !_collision.isOnFloor;
-            Shoot();
+            _shot.Shoot(_facingRight);
                 
         } 
         else if (Input.GetButtonUp("Fire1")) 
@@ -62,18 +55,10 @@ public class PlayerBehavior : MonoBehaviour
             _canMove = true;
         }
 
-        if (_collision.isOnFloor && !_isOnFloor)
+        if (_collision.isOnFloor && _rb.velocity.x < 0f)
         {
             GroundTouch();
-            _isOnFloor = true;
         }
-
-        if (!_collision.isOnFloor && _isOnFloor)
-        {
-            _isOnFloor = false;
-        }
-
-
     }
 
     private void Walk(float direction) {
@@ -84,8 +69,8 @@ public class PlayerBehavior : MonoBehaviour
             _rb.velocity = new Vector2(0, _rb.velocity.y);
 
         Flip(direction);
-
         _animation.Walk(_rb.velocity.x);
+        
     }
 
     private void Jump(float jumpForce) {
@@ -99,23 +84,11 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Flip(float direction)
     {
-        if ((direction > 0 && !_facingRight) || (direction < 0 && _facingRight)){
+        if ((direction > 0 && !_facingRight) || (direction < 0 && _facingRight))
+        {
             _facingRight = !_facingRight;        
             transform.Rotate(0,180,0);        
         }
-    }
-
-    private void Shoot()
-    {        
-        if (_bullet != null && _firePoint != null && _canShoot) {
-            _canShoot = false;
-            Instantiate(_bullet, _firePoint.position, _firePoint.rotation);                
-            Invoke("NextShot", _fireRate);
-        }       
-    }
-
-    void NextShot() {
-        _canShoot = true;
     }
 
     private void GroundTouch()
