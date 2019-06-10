@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {    
-    private FlashDamage _damageEffect;
-    private bool _isVisible = false;
+    protected FlashDamage _damageEffect;
+    protected bool _isVisible = false;
+    protected Rigidbody2D _rb;
 
     [SerializeField] int _health = 3;
+    [SerializeField] protected float _speed = 4;
+    [SerializeField] protected float _jumpForce = 4;
     // Start is called before the first frame update
     void Start()
     {
         _damageEffect = GetComponent<FlashDamage>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 
-    public void TakeDamage() 
+    public void TakeDamage(int damage) 
     {
         if (_isVisible)
         {
-            _health--;
+            _health -= damage;
             _damageEffect.SetFlashDamage();
         }
 
@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 
     private void OnBecameVisible()
     {

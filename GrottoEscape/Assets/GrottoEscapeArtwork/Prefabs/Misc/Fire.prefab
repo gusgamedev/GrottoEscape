@@ -165,3 +165,5 @@ MonoBehaviour:
   _damage: 1
   _fireParticle: {fileID: 3489957398146819050, guid: 7017ed48b699e9244838b77e07441dfb,
     type: 3}
+  _bulletShell: {fileID: 8106847874149867704, guid: 32b394be7e9e0404fa59933696c9b99c,
+    type: 3}

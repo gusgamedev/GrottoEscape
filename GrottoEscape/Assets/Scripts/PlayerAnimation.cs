@@ -22,15 +22,18 @@ public class PlayerAnimation : MonoBehaviour
         _anim.SetFloat("horizontalSpeed", Mathf.Abs(speed));       
     }
 
-    public void Jump(bool isOnFloor)
-    {
-        _anim.SetBool("isOnFloor", isOnFloor);
+    public void Jump()
+    {   
         _jumpParticles.Play();
     }
 
-    public void Land(bool isOnFloor)
+    public void Groudend(bool isOnFloor)
     {
         _anim.SetBool("isOnFloor", isOnFloor);
+    }
+
+    public void Land(bool isOnFloor)
+    {   
         _jumpParticles.Play();
     }
 

@@ -10,7 +10,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private bool _canMove = true;
     private bool _facingRight = true;
-    private bool _isOnFloor;
+    private bool _isOnFloor = true;
     private bool _canShoot = true;
 
     [Header("Jump Variables")]
@@ -47,11 +47,13 @@ public class PlayerBehavior : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
             Jump(_jumpForce);
 
+        _animation.Groudend(_isOnFloor);
+
         if (Input.GetButton("Fire1") )
         {      
-                _animation.Shot(true, _canShoot);
-                _canMove = !_collision.isOnFloor;
-                Shoot();
+            _animation.Shot(true, _canShoot);
+            _canMove = !_collision.isOnFloor;
+            Shoot();
                 
         } 
         else if (Input.GetButtonUp("Fire1")) 
@@ -90,8 +92,8 @@ public class PlayerBehavior : MonoBehaviour
 
         if (_collision.isOnFloor)
         {
+            _animation.Jump();
             _rb.velocity = Vector2.up * jumpForce;
-            _animation.Jump(false);
         }
     }
 
