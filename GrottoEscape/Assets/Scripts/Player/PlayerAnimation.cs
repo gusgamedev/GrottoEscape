@@ -4,50 +4,39 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-
-    private Animator _anim;
+    private Animator anim;
 
     [Header("Particles Animations")]
-    [SerializeField] private ParticleSystem _jumpParticles;
-    [SerializeField] private ParticleSystem _shotParticles;
+    [SerializeField] private ParticleSystem dustParticles;
     
     // Start is called before the first frame update
     void Start()
     {
-        _anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();        
     }
 
     public void Walk(float speed)
     {
-        _anim.SetFloat("horizontalSpeed", Mathf.Abs(speed));       
-    }
+        anim.SetFloat("horizontalSpeed", Mathf.Abs(speed));  
 
-    public void Jump()
-    {   
-        _jumpParticles.Play();
     }
-
-    public void Groudend(bool isOnFloor)
+    public void Dust()
     {
-        _anim.SetBool("isOnFloor", isOnFloor);
+        dustParticles.Play();
     }
 
-    public void Land(bool isOnFloor)
-    {   
-        _jumpParticles.Play();
-    }
-
-    public void Shot(bool isShooting, bool showParticles)
+    public void Shoot(bool isShooting)
     {
-        _anim.SetBool("shooting", isShooting);
+        anim.SetBool("isShooting", isShooting);
+            
+    }
 
-        if (showParticles)
-            _shotParticles.Play();
+    public void Grounded(bool isGrounded)
+    {
+        anim.SetBool("isOnFloor", isGrounded);
     }
 
 
 
 
-
-   
 }

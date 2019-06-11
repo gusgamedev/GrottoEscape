@@ -18,8 +18,6 @@ public class Enemy : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
-  
-
     public void TakeDamage(int damage) 
     {
         if (_isVisible)

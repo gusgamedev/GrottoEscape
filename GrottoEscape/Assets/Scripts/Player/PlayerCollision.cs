@@ -12,8 +12,8 @@ public class PlayerCollision : MonoBehaviour
     [Header("Booleans")]
     public bool isOnFloor = true;
     //public bool onWall;
-    //public bool onRightWall;
-    //public bool onLeftWall;
+    public bool onRightWall;
+    public bool onLeftWall;
     //public int wallSide;
 
     [Space]
@@ -36,9 +36,9 @@ public class PlayerCollision : MonoBehaviour
         //onWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer) 
          //   || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
 
-        //onRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
+        onRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
         
-        //onLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+        onLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
 
         //wallSide = onRightWall ? -1 : 1;
     }

@@ -4,96 +4,123 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    private Rigidbody2D _rb;
-    private PlayerCollision _collision;
-    private PlayerAnimation _animation;
-
-    private Shot _shot;
-
-    private bool _canMove = true;
-    private bool _facingRight = true;
-    private bool _isOnFloor = true;
- 
+    private Rigidbody2D rb;
+    private PlayerCollision coll;
+    private PlayerAnimation anim;
+    private Shot shot;
+       
+    private bool canMove = true;
+    private bool canJump = false;
+    private bool isFacingRight = true;
+    public bool isJumping = false;
+    private bool isFalling = false;
+    public bool isOnFloor = false;
+    private int  direction = 0; // 1 = right, -1 = left, 0 = idle
+    
     [Header("Jump Variables")]
-    [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _jumpForce = 10f;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float jumpForce = 10f;
    
     // Start is called before the first frame update
-    private void Awake() {
-        
-        _rb = GetComponent<Rigidbody2D>(); 
-        _collision = GetComponent<PlayerCollision>();
-        _animation = GetComponentInChildren<PlayerAnimation>();
-        _shot = GetComponent<Shot>();        
-
-        _isOnFloor = _collision.isOnFloor;
-    }
-
-    private void FixedUpdate()
-    {
-        float direction = Input.GetAxisRaw("Horizontal");
-        Walk(direction);
+    private void Awake()
+    {        
+        rb = GetComponent<Rigidbody2D>(); 
+        coll = GetComponent<PlayerCollision>();
+        anim = GetComponentInChildren<PlayerAnimation>();
+        shot = GetComponent<Shot>();
+        rb.velocity = Vector2.zero;
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
-            Jump(_jumpForce);
+        Inputs();
 
-        _animation.Groudend(_isOnFloor);
+        if (isJumping && isOnFloor)
+            Land();
 
-        if (Input.GetButton("Fire1") )
-        {      
-            _animation.Shot(true, _shot._canShoot);
-            _canMove = !_collision.isOnFloor;
-            _shot.Shoot(_facingRight);
-                
-        } 
-        else if (Input.GetButtonUp("Fire1")) 
-        {
-            _animation.Shot(false, false);
-            _canMove = true;
-        }
-
-        if (_collision.isOnFloor && _rb.velocity.x < 0f)
-        {
-            GroundTouch();
-        }
+        GroundCheck();
     }
 
-    private void Walk(float direction) {
+    private void FixedUpdate()
+    {   
+        Walk();
 
-        if (_canMove)
-            _rb.velocity = new Vector2(direction * _speed, _rb.velocity.y);
-        else
-            _rb.velocity = new Vector2(0, _rb.velocity.y);
-
-        Flip(direction);
-        _animation.Walk(_rb.velocity.x);
-        
+        if (canJump) 
+            Jump();
     }
 
-    private void Jump(float jumpForce) {
-
-        if (_collision.isOnFloor)
-        {
-            _animation.Jump();
-            _rb.velocity = Vector2.up * jumpForce;
-        }
-    }
-
-    private void Flip(float direction)
+    private void Inputs()
     {
-        if ((direction > 0 && !_facingRight) || (direction < 0 && _facingRight))
+        direction = (int)Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetButtonDown("Jump") && isOnFloor)
+            canJump = true;
+
+        if (Input.GetButton("Fire1"))
+            Shoot();
+
+        if (Input.GetButtonUp("Fire1"))
+            StopShooting();        
+    }
+
+    private void Shoot()
+    {  
+        canMove = !coll.isOnFloor;        
+       
+        anim.Shoot(true);
+
+        if ((!coll.onRightWall && isFacingRight) || (!coll.onLeftWall && !isFacingRight))
+            shot.InstantiateBullet();
+
+    }
+    private void StopShooting()
+    {   
+        canMove = true;
+        anim.Shoot(false);
+    }
+
+    private void Walk()
+    {
+        if (canMove)
+            rb.velocity = new Vector2(direction * speed, rb.velocity.y);
+        else
+            rb.velocity = new Vector2(0, rb.velocity.y);
+
+        Flip();
+        anim.Walk(rb.velocity.x);
+    }
+
+    private void Jump()
+    {       
+        canJump = false;
+        
+        rb.velocity = Vector2.up * jumpForce;
+        anim.Dust();
+    }
+
+    private void Land()
+    {
+        isJumping = false;
+        anim.Dust();
+    }
+
+    private void Flip()
+    {
+        if ((direction > 0 && !isFacingRight) || (direction < 0 && isFacingRight))
         {
-            _facingRight = !_facingRight;        
+            isFacingRight = !isFacingRight;        
             transform.Rotate(0,180,0);        
         }
     }
 
-    private void GroundTouch()
+    private void GroundCheck()
     {   
-        _animation.Land(true);
+        isOnFloor = coll.isOnFloor;
+
+        if (!isOnFloor)
+            isJumping = true;
+
+        anim.Grounded(isOnFloor);
     }
 
    
