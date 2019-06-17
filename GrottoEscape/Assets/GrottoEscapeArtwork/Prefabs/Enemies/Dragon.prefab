@@ -11,11 +11,9 @@ GameObject:
   - component: {fileID: 433918}
   - component: {fileID: 21278052}
   - component: {fileID: 9593892}
-  - component: {fileID: -3041010566117062437}
   - component: {fileID: -5326601456349983487}
   - component: {fileID: 6113377409851132112}
   - component: {fileID: 7802614923304026539}
-  - component: {fileID: 127147069}
   - component: {fileID: 127147070}
   m_Layer: 9
   m_Name: Dragon
@@ -106,20 +104,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-3041010566117062437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d598916287a6ec746a89ab393c3a2423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 3
-  _speed: 4
 --- !u!114 &-5326601456349983487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,54 +154,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &127147069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd438dd108a0f284aa931a2da434f1d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ImpulseDefinition:
-    m_ImpulseChannel: 1
-    m_RawSignal: {fileID: 11400000, guid: 8b1510df318edad48b51a8b84a229f41, type: 2}
-    m_AmplitudeGain: 0.18
-    m_FrequencyGain: 7
-    m_RepeatMode: 0
-    m_Randomize: 0
-    m_TimeEnvelope:
-      m_AttackShape:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      m_DecayShape:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      m_AttackTime: 0
-      m_SustainTime: 0.2
-      m_DecayTime: 0.7
-      m_ScaleWithImpact: 1
-      m_HoldForever: 0
-    m_ImpactRadius: 5
-    m_DirectionMode: 0
-    m_DissipationMode: 2
-    m_DissipationDistance: 1000
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  m_IgnoreTag: 
-  m_UseImpactDirection: 0
-  m_ScaleImpactWithMass: 0
-  m_ScaleImpactWithSpeed: 0
 --- !u!114 &127147070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 3
   _speed: 4
+  _jumpForce: 4
   _layerCollision:
     serializedVersion: 2
     m_Bits: 256

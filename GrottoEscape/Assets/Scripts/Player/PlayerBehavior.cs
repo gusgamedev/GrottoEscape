@@ -7,19 +7,23 @@ public class PlayerBehavior : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerCollision coll;
     private PlayerAnimation anim;
+    
     private Shot shot;
        
     private bool canMove = true;
     private bool canJump = false;
     private bool isFacingRight = true;
     public bool isJumping = false;
-    private bool isFalling = false;
+   // private bool isFalling = false;
     public bool isOnFloor = false;
     private int  direction = 0; // 1 = right, -1 = left, 0 = idle
-    
+
+    [SerializeField] private float knockBackForce = 20f;
+
     [Header("Jump Variables")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 10f;
+    
    
     // Start is called before the first frame update
     private void Awake()
@@ -67,10 +71,17 @@ public class PlayerBehavior : MonoBehaviour
     {  
         canMove = !coll.isOnFloor;        
        
+
         anim.Shoot(true);
 
         if ((!coll.onRightWall && isFacingRight) || (!coll.onLeftWall && !isFacingRight))
-            shot.InstantiateBullet();
+        {
+            if (shot.canShoot)
+            {
+                KnockBack();
+                shot.InstantiateBullet();                
+            }
+        }
 
     }
     private void StopShooting()
@@ -123,6 +134,16 @@ public class PlayerBehavior : MonoBehaviour
         anim.Grounded(isOnFloor);
     }
 
-   
+    private void KnockBack()
+    {
+
+        Debug.Log("aqui");
+        if (isFacingRight)
+            rb.AddForce(new Vector2(-knockBackForce, 0f));
+        else
+            rb.AddForce(new Vector2(knockBackForce, 0f));
+
+    }
+
 
 }
