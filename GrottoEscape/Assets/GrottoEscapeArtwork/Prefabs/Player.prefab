@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 21209242}
   - component: {fileID: 9578824}
   - component: {fileID: 1771415891}
+  - component: {fileID: 2041371672}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -115,7 +116,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dustParticles: {fileID: 821085940}
-  shotParticles: {fileID: 290044692}
+--- !u!114 &2041371672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956b0aeda3cbc1a418036cb8f2da10e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashMaterial: {fileID: 2100000, guid: 36f782d5f51c64649a4a918628dfae4f, type: 2}
 --- !u!1 &290044689
 GameObject:
   m_ObjectHideFlags: 0
@@ -6464,7 +6477,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: 5e65dafbc7f382946bdaa1c7ca7a4888, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:

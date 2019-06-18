@@ -16,6 +16,7 @@ public class Meter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _image.sprite = meters[GameManager.instance.PlayerHealth];
+        if (GameManager.instance.PlayerHealth >= 0)
+            _image.sprite = meters[GameManager.instance.PlayerHealth];
     }
 }
