@@ -5,6 +5,7 @@ public class Shot : MonoBehaviour {
     [Header("Shot Variables")]
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject granade;
     [SerializeField] private GameObject bulletShell;
     [SerializeField] private float fireRate = 0.2f;
     [SerializeField] private ParticleSystem shotParticles;
@@ -25,7 +26,15 @@ public class Shot : MonoBehaviour {
 
         }       
     }
-    
+
+    public void InstantiateGranade()
+    {
+        if (granade != null)
+        {   
+            Instantiate(granade, firePoint.position, firePoint.rotation);
+        }
+    }
+
     private void NextShot() {
         canShoot = true;
     }

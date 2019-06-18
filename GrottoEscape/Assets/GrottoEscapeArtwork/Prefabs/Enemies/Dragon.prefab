@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6113377409851132112}
   - component: {fileID: 7802614923304026539}
   - component: {fileID: 127147070}
+  - component: {fileID: 247769048225565701}
   m_Layer: 9
   m_Name: Dragon
   m_TagString: Enemy
@@ -169,10 +170,28 @@ MonoBehaviour:
   _health: 3
   _speed: 4
   _jumpForce: 4
+  explosion: {fileID: 3995808330620810720, guid: 32ef596b8969bd8498b6beb6a85645f8,
+    type: 3}
   _layerCollision:
     serializedVersion: 2
     m_Bits: 256
   _collisonDetector: {fileID: 1932555450}
+--- !u!114 &247769048225565701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 980a89ef4bbb7c94e811dc8760bf493d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionRadius: 0.4
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &1932555449
 GameObject:
   m_ObjectHideFlags: 0

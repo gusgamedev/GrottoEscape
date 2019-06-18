@@ -18,11 +18,17 @@ public class PlayerBehavior : MonoBehaviour
     public bool isOnFloor = false;
     private int  direction = 0; // 1 = right, -1 = left, 0 = idle
 
+    private enum shotType { BULLET, GRANADE };
+
     [SerializeField] private float knockBackForce = 20f;
+
+
 
     [Header("Jump Variables")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 10f;
+
+
     
    
     // Start is called before the first frame update
@@ -61,25 +67,34 @@ public class PlayerBehavior : MonoBehaviour
             canJump = true;
 
         if (Input.GetButton("Fire1"))
-            Shoot();
+            Shoot(shotType.BULLET);
 
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonDown("Fire2"))
+            Shoot(shotType.GRANADE);
+
+        if (Input.GetButtonUp("Fire1") || Input.GetButtonUp("Fire2"))
             StopShooting();        
     }
 
-    private void Shoot()
+    private void Shoot(shotType type)
     {  
-        canMove = !coll.isOnFloor;        
-       
+        canMove = !coll.isOnFloor;   
 
         anim.Shoot(true);
 
         if ((!coll.onRightWall && isFacingRight) || (!coll.onLeftWall && !isFacingRight))
         {
-            if (shot.canShoot)
+            if (type == shotType.BULLET)
             {
-                KnockBack();
-                shot.InstantiateBullet();                
+                if (shot.canShoot)
+                {
+                    KnockBack();
+                    shot.InstantiateBullet();
+                }
+            }
+            else if (type == shotType.GRANADE)
+            {
+                shot.InstantiateGranade();
             }
         }
 
@@ -136,8 +151,6 @@ public class PlayerBehavior : MonoBehaviour
 
     private void KnockBack()
     {
-
-        Debug.Log("aqui");
         if (isFacingRight)
             rb.AddForce(new Vector2(-knockBackForce, 0f));
         else

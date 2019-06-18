@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int _health = 3;
     [SerializeField] protected float _speed = 4;
     [SerializeField] protected float _jumpForce = 4;
+    [SerializeField] protected GameObject explosion;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,7 @@ public class Enemy : MonoBehaviour
 
         if (_health <= 0)
         {
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

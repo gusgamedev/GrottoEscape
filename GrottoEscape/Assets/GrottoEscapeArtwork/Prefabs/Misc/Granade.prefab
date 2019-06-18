@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 7414979038743371014}
   - component: {fileID: 7414979038743371015}
   - component: {fileID: 7414979038743371012}
-  - component: {fileID: 847489876171462397}
   - component: {fileID: 6553737122116261750}
   - component: {fileID: 1211402392}
   - component: {fileID: 7407068749350756480}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: Granade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7414979038743371018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.67388, y: 1.8351526, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -105,26 +104,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &847489876171462397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7414979038743371018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3325e93f968173541a64a509f57813d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionRadius: 1.5
-  damage: 5
-  timeToDestroy: 3
-  damageLayer:
-    serializedVersion: 2
-    m_Bits: 2560
-  explosion: {fileID: 3995808330620810720, guid: 32ef596b8969bd8498b6beb6a85645f8,
-    type: 3}
 --- !u!70 &6553737122116261750
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -138,8 +117,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000047683716, y: -0.030335546}
-  m_Size: {x: 0.2919836, y: 0.4393289}
+  m_Offset: {x: -0.002779603, y: -0.05456519}
+  m_Size: {x: 0.499974, y: 0.7679744}
   m_Direction: 0
 --- !u!95 &1211402392
 Animator:
@@ -172,10 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3325e93f968173541a64a509f57813d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionRadius: 0.5
+  ex: {fileID: 3995808330620810720, guid: 32ef596b8969bd8498b6beb6a85645f8, type: 3}
+  collisionRadius: 1.2
   damage: 5
   timeToDestroy: 3
   damageLayer:
     serializedVersion: 2
     m_Bits: 2560
-  explosion: {fileID: 0}
